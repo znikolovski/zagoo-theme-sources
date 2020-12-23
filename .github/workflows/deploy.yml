@@ -23,7 +23,10 @@ jobs:
         with:
           name: site-theme
           path: ${{ github.workspace }}/dist/**/*
-
+          
       - name: Dispatch completed event (this is a workaround in order to access the artifact id)
-        run: |
-          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GIT_TOKEN }}" --request POST --data '{"event_type": "update_theme_config", "client_payload": { "deployed_theme_run_id": "${{ github.run_id }}" } }' ${{ github.api_url }}/repos/${{ github.repository }}/dispatches
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+          event-type: update_theme_config
+          client-payload: '{ "deployed_theme_run_id": "${{ github.run_id }}" } }'
