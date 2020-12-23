@@ -26,8 +26,4 @@ jobs:
 
       - name: Dispatch completed event (this is a workaround in order to access the artifact id)
         run: |
-          curl -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GIT_TOKEN }}" \
-            --request POST \
-            --data '{"event_type": "update_theme_config", "client_payload": { "deployed_theme_run_id": "${{ github.run_id }}" } }' \
-            ${{ github.api_url }}/repos/${{ github.repository }}/dispatches
+          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GIT_TOKEN }}" --request POST --data '{"event_type": "update_theme_config", "client_payload": { "deployed_theme_run_id": "${{ github.run_id }}" } }' ${{ github.api_url }}/repos/${{ github.repository }}/dispatches
